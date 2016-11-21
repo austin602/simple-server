@@ -1,0 +1,22 @@
+{
+  "name": "simple-server",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "austin landon <austin.m.landon@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-ui-router": "^0.3.2"
+  }
+}
