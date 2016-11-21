@@ -6,7 +6,13 @@ var router = express.Router ();
 
 
 router.get ('/', function (request, response) {
-    response.render ('posts');
+    response.render ('posts', {
+        data: {
+            name: 'bob',
+            value: 42,
+            phrase: 'lorem ipsum...',
+        }
+    });
 })
 
 router.post ('/save', function (request, response) {
