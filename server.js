@@ -13,3 +13,11 @@ server.listen (port, function (error) {
     console.log('-the server has successfully started on port: ' + port);
     }
 });
+
+//setthe url routes that the server can use.
+
+//home or root route.
+
+server.get ('/', function (request, response) {
+    response.send ('Hello World!');
+});
