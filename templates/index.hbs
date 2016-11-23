@@ -15,8 +15,14 @@
             <a href="/contact">contact</a>
             <a href="/faq">FAQ</a>
             <a href="/post">post</a>
+            {{#if user }}
+            <a href="/user/dashboard">Dashboard</a>
+            <a href="/user/logout">Logout</a>
+            {{else}}
             <a href="/user/login">Login</a>
             <a href="/user/Register">Register</a>
+            {{/if}}
+            
             </nav>
         </div>
 

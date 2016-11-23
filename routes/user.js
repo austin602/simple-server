@@ -3,6 +3,14 @@ var express = require ('express');
 //create an express router.
 var router = express.Router ();
 //define routes.
+
+router.get ('/logout', function (request, response){
+    // response.render ('logout');
+    request.session.destroy ();
+
+    response.redirect ('/user/login');
+
+});
 router.get ('/register', function (request, response){
 
     response.render ('register');
@@ -11,8 +19,13 @@ router.get ('/register', function (request, response){
 
 router.get ('/login', function (request, response){
     // response.send ('You are now on the login page.');
-
-    response.render ('login');
+    //check to see if user session exists and the user is defined.
+    if (request.session.user) {
+        response.redirect ('/user/dashboard');
+    }
+    else {
+        response.render ('login');
+    }
 });
 
 router.post ('/register', function (request, response){
@@ -31,6 +44,8 @@ router.post ('/register', function (request, response){
                 response.send ('Server error, unable to register user.');
             }
             else {
+
+                console.log('Test')
                 //redirect to the login page.
                 response.redirect ('/user/login');
             }
@@ -66,19 +81,35 @@ router.post ('/login', function (request, response){
             else {
                 // response.send ('Found the user by the name: ' + result.username);
 
-                response.redirect ('/post');
+                //save the user to the session.
+                console.log ('This is the found user: ', result);
+
+                request.session.user = {
+                    username: result.username,
+                    email:result.email
+                }
+
+
+                response.redirect ('/user/dashboard');
             }
             console.log ('This is the result: ', result);
         });
         // response.render ('login');
     });
 
-    // router.get ('/reset', function (request, response) {
-    //     response.send ('You have now posted');
-    // });
-    // router.get ('/redirect', function (request, response) {
-    //     response.redirect ('/post');
-    // });
+    router.get ('/reset', function (request, response) {
+        response.send ('You have now posted');
+    });
+    router.get ('/dashboard', function (request, response) {
+        // response.send ('You are now on the dashboard page.');
+        console.log ('session: ');
+
+        response.render ('dashboard', {
+            data:{
+                user: request.session.user
+            }
+        });
+    });
 
     //exporting the router from this module.
     module.exports = router;

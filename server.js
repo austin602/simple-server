@@ -9,6 +9,21 @@ var bodyParser = require ('body-parser');
 
 server.use (bodyParser.urlencoded ({ extended: true }));
 
+
+var session = require ('express-session');
+
+server.use (session ({
+    secret:'This is my secret phrase',
+    resave: false,
+    saveUninitialized: true
+}));
+server.use (function (request, response, next) {
+    response.locals.user = request.session.user;
+
+    next ();
+
+})
+
 var port = 3000;
 
 //configure the render engine handlebars.
