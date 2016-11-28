@@ -74,9 +74,15 @@ router.post ('/login', function (request, response){
                 response.redirect ('/user/login');
             }
             else if (!result) {
-                // response.send ('Your username or password is NOT correct')
+                // The query was run but did NOT find a matching
+                // object
 
+                //create a flash message to let the user know there was a
+                //Problem with ther credentials.
+                request.flash ('error', 'Your username or password is not correct');
+                //redirect back to the login page.
                 response.redirect ('/user/login');
+
             }
             else {
                 // response.send ('Found the user by the name: ' + result.username);

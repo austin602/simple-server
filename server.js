@@ -1,12 +1,18 @@
+// Load in the express nodejs module.
 var express = require ('express');
 
+// Create the express server app.
 var server = express ();
 
+//set the public folder that can be accessed by any public user.
+server.use (express.static ('public'));
 
-
-
+// Make sure the body-parser has been installed (npm install body-parser --save).
+// Load the body-parser module.
 var bodyParser = require ('body-parser');
 
+// Set express to use the body parser to pull the
+// data out of any POST requests from the browser.
 server.use (bodyParser.urlencoded ({ extended: true }));
 
 
@@ -17,13 +23,23 @@ server.use (session ({
     resave: false,
     saveUninitialized: true
 }));
+
+//load in the connect-flash express middleware module.
+var flash = require ('connect-flash');
+
+//set our server app to use the flash message object.
+server.use (flash());
+
 server.use (function (request, response, next) {
     response.locals.user = request.session.user;
 
+    //set flash object to be set and used before running any other routes or functions.
+    response.locals.message = request.flash ();
+//move to the next route.
     next ();
 
-})
-
+});
+// Set the port that our server will run on.
 var port = 3000;
 
 //configure the render engine handlebars.
