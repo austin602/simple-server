@@ -111,3 +111,28 @@ server.get ('/test', function (request, response) {
     });
     response.send ('db test was run.');
 });
+
+
+
+
+
+//sandbox for mongoose.
+
+//load in the mongoose nodejs package.
+var mongoose = require ('mongoose');
+
+//connect mongoose to the mongo db server.
+mongoose.connect ('mongodb://localhost:27017/sample_database');
+
+
+
+// //grab the schema object from mongoose.
+// var Schema = mongoose.Schema;
+//
+// //create a schema for the user.
+// var userSchema = new Schema ({
+//     username: String,
+//     password: String
+// });
+// //take the user schema object and create a user model object for working with the mongodb.
+// var User = mongoose.model ('User', userSchema);

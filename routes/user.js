@@ -2,8 +2,11 @@
 var express = require ('express');
 //create an express router.
 var router = express.Router ();
-//define routes.
 
+//load the user schema object.
+var User = require ('../model/user.js');
+
+//define routes.
 router.get ('/logout', function (request, response){
     // response.render ('logout');
     request.session.destroy ();
@@ -117,5 +120,48 @@ router.post ('/login', function (request, response){
         });
     });
 
+
+router.get ('/test', function (request, response) {
+    //now that we have our model, we will try and create a new user object based on the model.
+    var newUser = User ({
+        username:'bobbie',
+        password:'bertha'
+    });
+
+    //save the user to the database.
+    newUser.save (function (error) {
+        if (error) {
+            console.error ('*** ERROR: Unable to save the user.');
+            console.error (error);
+        }
+        else {
+            console.log ('User was successfully saved to db: ', newUser);
+            //run a query to find a User object.
+            User.find ({ username: 'ronbravo' }, function (error, foundUser) {
+                if (error) {
+                    console.error ('*** ERROR: Unable to find the user.');
+                    console.error (error);
+                }
+                else{
+                    console.log ('User found: ', foundUser);
+                }
+            });
+
+            //run a query where we search by the user object's id.
+            User.findById ('583c73c15ee5e1142040798f', function (error, foundUser) {
+                if (error) {
+                    console.error ('*** ERROR: Unable to find the user by id.');
+                    console.error (error);
+                }
+                else{
+                    console.log ('User found by id: ', foundUser);
+                }
+            })
+        }
+    });
+
+    console.log('Test: ', User);
+
+})
     //exporting the router from this module.
     module.exports = router;
