@@ -1,16 +1,19 @@
 body {
-    background-color: #acacac;
+    background-color: #dbdbdb;
 }
 
-.notice{
-    &.error{
-        background-color: #f26e61;
+.notice {
+
+    // Adding the '&' in the class is the same as
+    // doing '.notice.error'
+    &.error {
+        background-color: #f6cbcb;
         border: 2px solid #fc6969;
         border-radius: 10px;
-        color: #0f0f0f;
+        color: #fc6969;
         padding: 10px;
-
     }
+
     &.warn {}
 
     &.info {}

@@ -1,50 +1,65 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Simple Server</title>
+<head>
+    <meta charset="utf-8">
+    <title>Simple Server</title>
 
-        <link href="/css/style.less" rel="stylesheet" type="text/less"/>
+    <link href="/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="/css/style.less" rel="stylesheet" type="text/less">
 
-        <!-- set options before less.js script -->
-        <script>
-        less = {
-            env: "development",
-            async: false,
-            fileAsync: false,
-            poll: 1000,
-            functions: {},
-            dumpLineNumbers: "comments",
-            relativeUrls: false,
-            rootpath: ":/a.com/"
-        };
-        </script>
-        <script src="/lib/less/dist/less.js"></script>
-    </head>
-    <body>
-        <h1>Simple Server</h1>
-        <p>This is a simple server app.</p>
+    <!-- set options before less.js script -->
+    <script>
+    less = {
+        env: "development",
+        async: false,
+        fileAsync: false,
+        poll: 1000,
+        functions: {},
+        dumpLineNumbers: "comments",
+        relativeUrls: false,
+        rootpath: ":/a.com/"
+    };
+    </script>
+    <script src="/lib/less/dist/less.js"></script>
 
-        <div>
-            <nav>
-            <a href="/">Home</a>
-            <a href="/about">about</a>
-            <a href="/contact">contact</a>
-            <a href="/faq">FAQ</a>
-            <a href="/post">post</a>
-            {{#if user }}
-            <a href="/user/dashboard">Dashboard</a>
-            <a href="/user/logout">Logout</a>
-            {{else}}
-            <a href="/user/login">Login</a>
-            <a href="/user/Register">Register</a>
-            {{/if}}
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+</head>
+<body>
 
-            </nav>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Simple Server</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/product">Products</a></li>
+                <li><a href="/faq">FAQs</a></li>
+
+                <!-- Alternate the menu if the user is logged in or not -->
+                {{#if user }}
+                <li><a href="/user/dashboard">Dashboard</a></li>
+                <li><a href="/user/logout">Logout</a></li>
+                {{else }}
+                <li><a href="/user/login">Login</a></li>
+                <li><a href="/user/register">Register</a></li>
+                {{/if}}
+            </ul>
         </div>
+    </nav>
 
-        <!-- set an area of the page where the partial
-        html content will be inserted. -->
-        {{{ body }}}
-    </body>
+
+    This should be user data: {{ user.name }}
+
+    <h1>Simple Server</h1>
+    <p>This is the simple server app.</p>
+
+    <!-- Set an area of the page where the partial
+    html content will be inserted. -->
+    {{{ body }}}
+
+</body>
 </html>

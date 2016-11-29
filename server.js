@@ -15,6 +15,43 @@ var bodyParser = require ('body-parser');
 // data out of any POST requests from the browser.
 server.use (bodyParser.urlencoded ({ extended: true }));
 
+//set express to parse raw JSON data if it is sent
+//down as part of the request body.
+server.use (bodyParser.json());
+
+//load the method override so express can know what
+//http method other than get and post is being used.
+var methodOverride = require('method-override');
+
+//let express know that we are overriding the http method
+//and using the method sent in the form data.
+// server.use(methodOverride('X-HTTP-Method-Override'));
+server.use (methodOverride (function (request, response) {
+    //Grab the request information and check to see
+    //if the http method was sent down as an _method value.
+
+    //check if the request has body content.
+    if (request.body) {
+
+        //check if the request body is a javascript literal object.
+        if (typeof request.body === 'object') {
+
+            //check if the body has an '_method' property on it.
+            if (request.body._method) {
+
+                //grab the http method from the body.
+                var method = request.body._method;
+
+                //remove the _method property from the body.
+                delete request.body._method;
+
+                //return the actual http method.
+                return method;
+            }
+        }
+    }
+}));
+
 
 var session = require ('express-session');
 
@@ -25,6 +62,7 @@ server.use (session ({
 }));
 
 //load in the connect-flash express middleware module.
+
 var flash = require ('connect-flash');
 
 //set our server app to use the flash message object.
@@ -35,6 +73,16 @@ server.use (function (request, response, next) {
 
     //set flash object to be set and used before running any other routes or functions.
     response.locals.message = request.flash ();
+
+    //Grab the content-type from the request.
+    var contentType = request.headers ['content-type'];
+    request.contentType = contentType;
+//set our object to use JSON if
+//we detect a request for 'application/json'.
+    if (contentType == 'application/json') {
+        request.sendJson = true;
+    }
+
 //move to the next route.
     next ();
 
@@ -99,6 +147,9 @@ server.use ('/post', postsRoutes)
 var userRoutes = require ('./routes/user.js');
 server.use ('/user', userRoutes);
 
+var productRoutes = require ('./routes/product.js');
+server.use ('/product', productRoutes);
+
 
 server.get ('/test', function (request, response) {
 
@@ -123,6 +174,9 @@ var mongoose = require ('mongoose');
 
 //connect mongoose to the mongo db server.
 mongoose.connect ('mongodb://localhost:27017/sample_database');
+
+//set the mongoose promise library to use.
+mongoose.Promise = require('bluebird');
 
 
 

@@ -1,0 +1,17 @@
+<h2>Products</h2>
+
+<a class="btn btn-warning" href="/product/{{ data.product.id }}/edit">Edit Product</a>
+<!-- <a class="btn btn-danger" href="/product/{{ data.product.id }}?_method=DELETE">Delete Product</a> -->
+<a class="btn btn-danger" href="/product/{{ data.product.id }}/delete">Delete Product</a>
+
+<div class="panel panel-default">
+    <div class= "panel-body">
+        <div>
+            <strong>name:</strong> {{ data.product.name }}
+        </div>
+
+        <div>
+            <strong>description:</strong> {{ data.product.description }}
+        </div>
+    </div>
+</div>
